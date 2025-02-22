@@ -1,0 +1,62 @@
+﻿
+@{
+    ViewData["Title"] = "Products";
+}
+
+<h1>ShowAllProducts</h1>
+<style>
+    table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    th, td {
+        border: 1px solid #ddd;
+        padding: 8px;
+        text-align: left;
+    }
+
+    th {
+        background-color: #f2f2f2;
+    }
+
+    tr:nth-child(even) {
+        background-color: #f9f9f9;
+    }
+
+    tr:hover {
+        background-color: #ddd;
+    }
+
+    img {
+        width: 100px;
+        height: auto;
+    }
+</style>
+
+<table >
+    <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Price</th>
+        <th>Type</th>
+        <th>Category</th>
+        <th>Image</th>
+    </tr>
+    @foreach (Products item in Model)
+    {
+        <tr>
+            <td>@item.Id</td>
+            <td>@item.Name</td>
+            <td>@item.Price</td>
+            <td>@item.Type</td>
+            <td>@item.Category</td>
+            <td>
+                <a href="/Products/Details/@item.Id" target="_blank">
+                    <img src="/Images/@item.img" style="width:100px" alt="Product Image" />
+                </a>
+            </td>
+        </tr>
+    }
+
+</table>

@@ -1,0 +1,72 @@
+﻿@model List<Trainee>
+@{
+    ViewData["Title"] = "Index";
+}
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f9f9f9;
+        margin: 0;
+        padding: 20px;
+    }
+
+    h1 {
+        color: #333;
+        text-align: center;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 20px 0;
+    }
+
+    th, td {
+        padding: 12px;
+        border: 1px solid #ddd;
+        text-align: left;
+    }
+
+    th {
+        background-color: #f2f2f2;
+    }
+
+    tr:nth-child(even) {
+        background-color: #f9f9f9;
+    }
+
+    tr:hover {
+        background-color: #e9e9e9;
+    }
+
+    img {
+        width: 100px;
+    }
+</style>
+<body>
+<h1>Trainee Data</h1>
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Image</th>
+            <th>Address</th>
+            <th>Grade</th>
+            <th>Department</th>
+        </tr>
+        @foreach (Trainee item in Model)
+        {
+            <tr>
+                <td>@item.ID</td>
+                <td>@item.Name</td>
+                <td>
+                   <img src="/Images/@item.Image" style="width:100px" alt="Image not fount" />
+                </td>
+                <td>@item.Address</td>
+                <td>@item.Grade</td>
+                <td>@item.Department.Name</td>
+            </tr>
+        }
+
+    </table>
+</body>
