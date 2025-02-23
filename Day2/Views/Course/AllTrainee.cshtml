@@ -1,0 +1,75 @@
+﻿@model List<TraineeDetails>
+@{
+    ViewData["Title"] = "AllTrainee";
+}
+<style>
+
+    table {
+        width: 80%;
+        border-collapse: collapse;
+        margin: 20px 0;
+        background-color: #fff;
+        border: 1px solid #ccc;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    th, td {
+        padding: 10px;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+    }
+
+    th {
+        background-color: #f2f2f2;
+        font-weight: bold;
+    }
+
+    tr:nth-child(even) {
+        background-color: #f9f9f9;
+    }
+
+    tr:hover {
+        background-color: #f1f1f1;
+    }
+
+    td {
+        position: relative;
+    }
+
+    .status-indicator {
+        display: inline-block;
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        margin-right: 8px;
+    }
+
+    .status-succeeded {
+        background-color: green;
+    }
+
+    .status-failed {
+        background-color: red;
+    }
+</style>
+<body>
+    <h1>AllTrainee</h1>
+    <table>
+        <tr>
+            <th>Name</th>
+            <th>Degree</th>
+            <th>Course Name</th>
+        </tr>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.TName</td>
+                <td>
+                    <span class="status-indicator @(item.Status == Status.Succeeded ? "status-succeeded" : "status-failed")"></span>
+                    @item.Degree
+                </td>
+                <td>@item.CName</td>
+            </tr>
+        }
+    </table>
+</body>
