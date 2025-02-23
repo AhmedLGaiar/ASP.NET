@@ -1,0 +1,25 @@
+﻿@model TraineeDetails
+@{
+    ViewData["Title"] = "IndexVM";
+}
+<style>
+
+    #Trainee {
+        border: 1px solid #ccc;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        background-color: @(Model.Status == Status.Succeeded ? "green" : "red");
+        color: white;
+    }
+
+</style>
+<body>
+    <h1>IndexVM</h1>
+    <div id="Trainee">
+        <h2>@Model.TName</h2>
+        <h3>@Model.CName</h3>
+        <h3>@Model.Degree</h3>
+        <h3>@Model.Status</h3>
+    </div>
+</body>
