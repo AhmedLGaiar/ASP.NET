@@ -14,16 +14,10 @@ namespace Day2.Controllers
         {
             List<crsResult> Trainees = instituteContext.crsResult.Include(e => e.Trainee)
                                         .Include(e => e.Course).ToList();
-            List<TraineeDetails> TraineeListVM = new List<TraineeDetails>();
 
-            foreach (var trinee in Trainees)
-            {
-                var trineess = new TraineeDetails();
-                trineess.TName = trinee.Trainee.Name;
-                trineess.Degree = trinee.Degree;
-                trineess.CName = trinee.Course.Name;
-                TraineeListVM.Add(trineess);
-            }
+            var mapper = MapperConfig.InitializeAutomapper();
+
+            var TraineeListVM = mapper.Map<List<TraineeDetails>>(Trainees);
 
             return View("AllTrainee", TraineeListVM);
         }

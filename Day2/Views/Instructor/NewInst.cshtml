@@ -1,0 +1,43 @@
+﻿@model InstructorVM
+@{
+    ViewData["Title"] = "NewInst";
+}
+<body>
+    <h1>New Instructor</h1>
+    <form action="/Instructor/NewInst" method="post" enctype="multipart/form-data">
+        <label>Name</label>
+        <input type="text" name="Name"
+               value="@Model.Name" class="form form-control" />
+
+        <label>Image</label>
+        <input type="file" name="Image" accept="image/*"
+              value="@Model.Image" class="form form-control" />
+
+        <label>Salary</label>
+        <input type="number" name="Salary"
+              value="@Model.Salary"  class="form form-control" />
+
+        <label>Address</label>
+        <input type="text" name="Address"
+              value="@Model.Address" class="form form-control" />
+
+        <label>Course</label>
+        <select name="CourseID" class="form form-control">
+            @foreach (Course item in Model.courses)
+            {
+                <option value="@item.ID">@item.Name</option>
+            }
+        </select>
+
+        <label>Department</label>
+        <select name="DepartmentID" class="form form-control">
+            @foreach (Department item in Model.Departments)
+            {
+                <option value="@item.ID">@item.Name</option>
+            }
+        </select>
+
+        <input type="submit" value="Save" class="btn btn-secondary" />
+    </form>
+    <a href="/Instructor/Index">Go To Hell</a>
+</body>

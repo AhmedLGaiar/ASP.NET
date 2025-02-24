@@ -1,0 +1,26 @@
+﻿@model Instructor
+@{
+    ViewData["Title"] = "Instructor Details";
+}
+
+<h1>Instructor Details</h1>
+
+<div class="container mt-4">
+    <div class="card">
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-3">
+                    <img src="/Images/@Model.Image" class="img-fluid rounded-circle" alt="Image not found" />
+                </div>
+                <div class="col-md-9">
+                    <h2><i class="fas fa-user"></i> Name: @Model.Name</h2>
+                    <h2><i class="fas fa-id-badge"></i> ID: @Model.ID</h2>
+                    <h2><i class="fas fa-dollar-sign"></i> Salary: @Model.Salary</h2>
+                    <h2><i class="fas fa-home"></i> Address: @Model.Address</h2>
+                    <h3><i class="fas fa-building"></i> Department: @Model.Department.Name</h3>
+                    <h3><i class="fas fa-book"></i> Course: @Model.Course.Name</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

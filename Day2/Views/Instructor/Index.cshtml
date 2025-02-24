@@ -1,0 +1,64 @@
+﻿@model List<Instructor>
+@{
+    ViewData["Title"] = "Index";
+}
+<style>
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 20px 0;
+    }
+
+    th, td {
+        padding: 12px;
+        border: 1px solid #ddd;
+        text-align: left;
+    }
+
+    th {
+        background-color: #f2f2f2;
+    }
+
+    tr:nth-child(even) {
+        background-color: #f9f9f9;
+    }
+
+    tr:hover {
+        background-color: #e9e9e9;
+    }
+
+    img {
+        width: 100px;
+    }
+</style>
+<body>
+    <h1>Instructors Data</h1>
+    <a href="/Instructor/New">Add New Instructor</a>
+
+        <table>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Image</th>
+                <th>Salary</th>
+                <th>Address</th>
+                <th>Department</th>
+                <th>Course</th>
+            </tr>
+            @foreach (Instructor item in Model)
+            {
+                <tr>
+                    <td>@item.ID</td>
+                    <td> <a href="/Instructor/IndexDetails/@item.ID">@item.Name</a></td>
+                    <td>
+                        <img src="/Images/@item.Image" style="width:100px" alt="Image not fount" />
+                    </td>
+                    <td>@item.Salary</td>
+                    <td>@item.Address</td>
+                    <td>@item.Department.Name</td>
+                    <td>@item.Course.Name</td>
+                </tr>
+            }
+
+        </table>
+    </body>
