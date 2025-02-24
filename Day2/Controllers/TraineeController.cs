@@ -13,17 +13,15 @@ namespace Day2.Controllers
             var TraineeList = instituteContext.Trainee.Include(e => e.Department).ToList();
             return View("Index", TraineeList);
         }
-        public IActionResult IndexVM(int Traineeid,int Courseid)
+        public IActionResult IndexVM(int Traineeid, int Courseid)
         {
             var Trainee = instituteContext.crsResult.Include(e => e.Trainee)
-                .Include(e => e.Course).FirstOrDefault(e => e.TraineeID == Traineeid && e.CourseID== Courseid);
-            var TraineeVM = new TraineeDetails();
-            TraineeVM.TName = Trainee.Trainee.Name;
-            TraineeVM.Degree = Trainee.Degree;
-            TraineeVM.CName = Trainee.Course.Name;
+                .Include(e => e.Course).FirstOrDefault(e => e.TraineeID == Traineeid && e.CourseID == Courseid);
+
+            var mapper = MapperConfig.InitializeAutomapper();
+            var TraineeVM = mapper.Map<TraineeDetails>(Trainee);
 
             return View("IndexVM", TraineeVM);
-        }  
-   
+        }
     }
 }
