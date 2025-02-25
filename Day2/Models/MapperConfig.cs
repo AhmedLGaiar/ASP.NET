@@ -9,10 +9,8 @@ namespace Day2.Models
     {
         public static Mapper InitializeAutomapper()
         {
-            //Provide all the Mapping Configuration
             var config = new MapperConfiguration(cfg =>
             {
-                //Configuring Employee and EmployeeDTO
                 cfg.CreateMap<crsResult, TraineeDetails>()
                      .ForMember(dest => dest.TName, opt => opt.MapFrom(src => src.Trainee.Name))
                      .ForMember(dest => dest.CName, opt => opt.MapFrom(src => src.Course.Name))
@@ -22,7 +20,6 @@ namespace Day2.Models
                      
             });
 
-            //Create an Instance of Mapper and return that Instance
             var mapper = new Mapper(config);
             return mapper;
         }
