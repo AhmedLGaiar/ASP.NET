@@ -1,0 +1,31 @@
+﻿@model CourseVM
+@{
+    ViewData["Title"] = "New";
+    Layout = "_PortfolioLayout";
+    SelectList DeptList = new SelectList(Model.DepartmentsList, "ID", "Name");
+}
+
+<body>
+  <h1>New</h1>
+    <form asp-action="NewCrs" asp-controller="Course">
+
+
+        <label asp-for="Name"></label>
+        <input asp-for="Name" class="form form-control"  />
+
+        <label asp-for="Degree"></label>
+        <input asp-for="Degree" class="form form-control" />
+
+        <label asp-for="MinDegree"></label>
+        <input asp-for="MinDegree" class="form form-control" />
+
+        <label asp-for="Hours"></label>
+        <input asp-for="Hours" class="form form-control" />
+
+        <label asp-for="DepartmentID"></label>
+        <select asp-for="DepartmentID" asp-items="DeptList" class="form form-control"></select>
+
+        <input type="submit" value="Create" class="btn btn-success" />
+    </form>
+</body>
+

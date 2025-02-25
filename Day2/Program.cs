@@ -27,6 +27,16 @@ namespace Day2
             app.UseAuthorization();
 
             app.MapControllerRoute(
+              name: "CourseShortcut",
+              pattern: "crs/{action}",
+              defaults: new { controller = "Course", action = "AllCourses"});
+            
+            app.MapControllerRoute(
+              name: "insCourseShortcut",
+              pattern: "ins/{action}",
+              defaults: new { controller = "Instructor", action = "Index" });
+
+            app.MapControllerRoute(
                 name: "default",
                 pattern: "{controller=Home}/{action=Index}/{id?}");
 

@@ -45,7 +45,7 @@ namespace Day2.Controllers
         public async Task<IActionResult> NewInst(Instructor ins, IFormFile Image)
         {
             
-            if (ins != null)
+            if (ins.Name != null)
             {
                 if (Image != null ) 
                 {
@@ -62,13 +62,13 @@ namespace Day2.Controllers
                 context.SaveChanges();
                 return RedirectToAction("Index");
             }
-            // جرب مره ب null ومره منغير
-            var mapper = MapperConfig.InitializeAutomapper();
-            var TraineeVM = mapper.Map<InstructorVM>(ins);
-            TraineeVM.Departments = context.Department.ToList();
-            TraineeVM.courses= context.Course.ToList();
 
-            return View("NewInst", TraineeVM);
+            var mapper = MapperConfig.InitializeAutomapper();
+            var INSVM = mapper.Map<InstructorVM>(ins);
+            INSVM.Departments = context.Department.ToList();
+            INSVM.courses= context.Course.ToList();
+
+            return View("NewInst", INSVM);
         }
     }
 }
