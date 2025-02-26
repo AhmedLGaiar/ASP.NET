@@ -1,31 +1,52 @@
 ﻿@model CourseVM
 @{
     ViewData["Title"] = "New";
-    Layout = "_PortfolioLayout";
     SelectList DeptList = new SelectList(Model.DepartmentsList, "ID", "Name");
 }
 
 <body>
-  <h1>New</h1>
+  <h1>New Course</h1>
     <form asp-action="NewCrs" asp-controller="Course">
 
+        <div>
+            <label asp-for="Name"></label>
+            <input asp-for="Name" class="form form-control" />
+            <span asp-validation-for="Name" class="text-danger"></span>
+        </div>
 
-        <label asp-for="Name"></label>
-        <input asp-for="Name" class="form form-control"  />
+        <div>
+            <label asp-for="Degree"></label>
+            <input asp-for="Degree" class="form form-control" />  
+            <span asp-validation-for="Degree" class="text-danger"></span>
+        </div>
 
-        <label asp-for="Degree"></label>
-        <input asp-for="Degree" class="form form-control" />
+        <div>
+            <label asp-for="MinDegree"></label>
+            <input asp-for="MinDegree" class="form form-control" />
+            <span asp-validation-for="MinDegree" class="text-danger"></span>
+        </div>
 
-        <label asp-for="MinDegree"></label>
-        <input asp-for="MinDegree" class="form form-control" />
+        <div>
+            <label asp-for="Hours"></label>
+            <input asp-for="Hours" class="form form-control" />
+            <span asp-validation-for="Hours" class="text-danger"></span>
+        </div>
 
-        <label asp-for="Hours"></label>
-        <input asp-for="Hours" class="form form-control" />
+        <div>
+            <label asp-for="DepartmentID"></label>
+            <select asp-for="DepartmentID" asp-items="DeptList" class="form form-control">
+                <option value="0">--Select Department --</option>
+            </select>
+            <span asp-validation-for="DepartmentID" class="text-danger"></span>
+        </div>
 
-        <label asp-for="DepartmentID"></label>
-        <select asp-for="DepartmentID" asp-items="DeptList" class="form form-control"></select>
-
-        <input type="submit" value="Create" class="btn btn-success" />
+        <div>
+            <input type="submit" value="Create" class="btn btn-success" />
+        </div>
+             
     </form>
 </body>
 
+<script src="/lib/jquery/dist/jquery.min.js"></script>
+<script src="/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+<script src="/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>

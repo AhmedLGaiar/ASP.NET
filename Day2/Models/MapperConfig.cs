@@ -17,7 +17,9 @@ namespace Day2.Models
                      .ForMember(dest => dest.Degree, opt => opt.MapFrom(src => src.Degree));
 
                 cfg.CreateMap<Instructor, InstructorVM>();
-                     
+
+                cfg.CreateMap<Course, CourseVM>().ReverseMap();
+      
             });
 
             var mapper = new Mapper(config);

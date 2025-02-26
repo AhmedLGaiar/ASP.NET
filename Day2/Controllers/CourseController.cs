@@ -10,6 +10,36 @@ namespace Day2.Controllers
     {
         InstituteContext Context = new InstituteContext();
 
+        #region Remote Validation
+        public IActionResult CheckMinDegree(byte MinDegree, byte Degree)
+        {
+            if (MinDegree < Degree)
+                return Json(true);
+            else
+                return Json(false);
+        }
+
+        public IActionResult Modules_by_3(byte Hours)
+        {
+            if (Hours % 3 == 0)
+                return Json(true);
+            else
+                return Json(false);
+        }
+
+        public IActionResult ISValidDepartmentID(int DepartmentID)
+        {
+            var exists = Context.Department.Any(d => d.ID == DepartmentID);
+
+            if (exists)
+                return Json(true);
+            else
+                return Json(false);
+        }
+        #endregion
+
+        #region Actions
+
         public IActionResult AllTrainee()
         {
             List<crsResult> Trainees = Context.crsResult.Include(e => e.Trainee)
@@ -21,6 +51,7 @@ namespace Day2.Controllers
 
             return View("AllTrainee", TraineeListVM);
         }
+
         public IActionResult AllCourses()
         {
             List<Course> courses = Context.Course.Include(e => e.Department).ToList();
@@ -37,14 +68,24 @@ namespace Day2.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> NewCrs(Course Crs)
+        public async Task<IActionResult> NewCrs(CourseVM Crs)
         {
 
-            if (Crs.Name != null)
+            if (ModelState.IsValid)
             {
-                Context.Add(Crs);
-                Context.SaveChanges();
-                return RedirectToAction("AllCourses");
+                try
+                {
+                    var mapper1 = MapperConfig.InitializeAutomapper();
+                    var courseVM1 = mapper1.Map<Course>(Crs);
+                    Context.Add(courseVM1);
+                    Context.SaveChanges();
+                    return RedirectToAction("AllCourses");
+                }
+                catch (Exception msg)
+                {
+                    ModelState.AddModelError(string.Empty, msg.InnerException.Message);
+                }
+
             }
 
             var mapper = MapperConfig.InitializeAutomapper();
@@ -53,5 +94,8 @@ namespace Day2.Controllers
 
             return View("New", courseVM);
         }
+
+        #endregion
+
     }
 }
