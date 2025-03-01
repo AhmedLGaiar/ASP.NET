@@ -23,8 +23,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\BusinessLogic\Repository.csproj" />
-    <ProjectReference Include="..\Day2-Institute\Institute.csproj" />
+    <ProjectReference Include="..\Institute\Institute.csproj" />
+    <ProjectReference Include="..\Repository\Repository.csproj" />
   </ItemGroup>
 
 </Project>

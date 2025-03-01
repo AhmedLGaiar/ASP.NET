@@ -11,7 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Day2-Institute\Institute.csproj" />
+    <ProjectReference Include="..\Institute\Institute.csproj" />
   </ItemGroup>
 
 </Project>
