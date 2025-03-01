@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Day2_Institute
+namespace Institute
 {
     public class Trainee
     {
@@ -17,6 +17,5 @@ namespace Day2_Institute
         public int DepartmentID { get; set; }
         public Department Department { get; set; }
         public ICollection<crsResult> crsResults { get; set; } = new HashSet<crsResult>();
-
     }
 }

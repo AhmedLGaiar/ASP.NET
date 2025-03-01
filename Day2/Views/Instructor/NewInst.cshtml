@@ -31,7 +31,7 @@
 
         <label>Department</label>
         <select name="DepartmentID" class="form form-control">
-            @foreach (Department item in Model.Departments)
+            @foreach (Department item in Model.Department)
             {
                 <option value="@item.ID">@item.Name</option>
             }

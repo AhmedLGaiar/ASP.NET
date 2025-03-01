@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using Day2.Controllers;
 using Day2.VewModel;
-using Day2_Institute;
+using Institute;
 
 namespace Day2.Models
 {
@@ -16,7 +16,7 @@ namespace Day2.Models
                      .ForMember(dest => dest.CName, opt => opt.MapFrom(src => src.Course.Name))
                      .ForMember(dest => dest.Degree, opt => opt.MapFrom(src => src.Degree));
 
-                cfg.CreateMap<Instructor, InstructorVM>();
+                cfg.CreateMap<Instructor, InstructorVM>().ReverseMap();
 
                 cfg.CreateMap<Course, CourseVM>().ReverseMap();
       

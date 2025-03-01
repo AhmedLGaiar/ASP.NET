@@ -1,14 +1,25 @@
 ﻿using Day2.Models;
 using Day2.VewModel;
-using Day2_Institute;
+using Institute;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Repository;
 
 namespace Day2.Controllers
 {
     public class CourseController : Controller
     {
-        InstituteContext Context = new InstituteContext();
+        private readonly ICourseRepository _courseRepository;
+        private readonly ITraineeRepository _traineeRepository;
+        private readonly IDepartmentRepository _departmentRepository;
+        public CourseController(IDepartmentRepository departmentRepo,
+                             ITraineeRepository traineeRepo,
+                             ICourseRepository courseRepo)
+        {
+            _courseRepository = courseRepo;
+            _traineeRepository = traineeRepo;
+            _departmentRepository = departmentRepo;
+        }
 
         #region Remote Validation
         public IActionResult CheckMinDegree(byte MinDegree, byte Degree)
@@ -29,9 +40,9 @@ namespace Day2.Controllers
 
         public IActionResult ISValidDepartmentID(int DepartmentID)
         {
-            var exists = Context.Department.Any(d => d.ID == DepartmentID);
+            var exists = _departmentRepository.GetByID(DepartmentID);
 
-            if (exists)
+            if (exists != null)
                 return Json(true);
             else
                 return Json(false);
@@ -42,19 +53,18 @@ namespace Day2.Controllers
 
         public IActionResult AllTrainee()
         {
-            List<crsResult> Trainees = Context.crsResult.Include(e => e.Trainee)
-                                        .Include(e => e.Course).ToList();
+            var Trainee = _traineeRepository.GetAll();
 
             var mapper = MapperConfig.InitializeAutomapper();
 
-            var TraineeListVM = mapper.Map<List<TraineeDetails>>(Trainees);
+            var TraineeListVM = mapper.Map<List<TraineeDetails>>(Trainee);
 
             return View("AllTrainee", TraineeListVM);
         }
 
         public IActionResult AllCourses()
         {
-            List<Course> courses = Context.Course.Include(e => e.Department).ToList();
+            var courses = _courseRepository.GetAll();
 
             return View("AllCourses", courses);
         }
@@ -62,8 +72,8 @@ namespace Day2.Controllers
         public IActionResult New()
         {
             var InsMV = new CourseVM();
-            InsMV.DepartmentsList = Context.Department.ToList();
-            if (InsMV.DepartmentsList is null) return Content("Error");
+            InsMV.DepartmentList = (List<Department>)_departmentRepository.GetAll();
+            if (InsMV.DepartmentList is null) return Content("Error");
             return View("New", InsMV);
         }
 
@@ -77,8 +87,8 @@ namespace Day2.Controllers
                 {
                     var mapper1 = MapperConfig.InitializeAutomapper();
                     var courseVM1 = mapper1.Map<Course>(Crs);
-                    Context.Add(courseVM1);
-                    Context.SaveChanges();
+                    _courseRepository.Add(courseVM1);
+                    _courseRepository.Save();
                     return RedirectToAction("AllCourses");
                 }
                 catch (Exception msg)
@@ -90,7 +100,7 @@ namespace Day2.Controllers
 
             var mapper = MapperConfig.InitializeAutomapper();
             var courseVM = mapper.Map<CourseVM>(Crs);
-            courseVM.DepartmentsList = Context.Department.ToList();
+            courseVM.DepartmentList = (List<Department>)_departmentRepository.GetAll();
 
             return View("New", courseVM);
         }
