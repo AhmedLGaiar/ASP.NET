@@ -2,10 +2,10 @@
 
 #nullable disable
 
-namespace Day2.Migrations
+namespace Institute.Migrations
 {
     /// <inheritdoc />
-    public partial class init : Migration
+    public partial class InitialCreate : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -33,7 +33,7 @@ namespace Day2.Migrations
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Degree = table.Column<byte>(type: "tinyint", nullable: false),
                     MinDegree = table.Column<byte>(type: "tinyint", nullable: false),
-                    Hours = table.Column<byte>(type: "tinyint", nullable: false),
+                    Hours = table.Column<byte>(type: "tinyint", nullable: true),
                     DepartmentID = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
@@ -44,7 +44,7 @@ namespace Day2.Migrations
                         column: x => x.DepartmentID,
                         principalTable: "Department",
                         principalColumn: "ID",
-                        onDelete: ReferentialAction.NoAction);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(

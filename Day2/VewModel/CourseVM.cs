@@ -1,4 +1,4 @@
-﻿using Day2_Institute;
+﻿using Institute;
 using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -30,6 +30,6 @@ namespace Day2.VewModel
         [Remote("ISValidDepartmentID", "Course"
             , ErrorMessage = "Choose Valid Department")]
         public int DepartmentID { get; set; }
-        public List<Department> DepartmentsList { get; set; } = new();
+        public List<Department> DepartmentList { get; set; } = new();
     }
 }

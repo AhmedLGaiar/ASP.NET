@@ -1,3 +1,5 @@
+using Microsoft.EntityFrameworkCore;
+using Repository;
 namespace Day2
 {
     public class Program
@@ -9,7 +11,15 @@ namespace Day2
             // Add services to the container.
             builder.Services.AddControllersWithViews();
 
+            builder.Services.AddDbContext<InstituteContext>(options =>
+               options.UseSqlServer(builder.Configuration.GetConnectionString("CS")));
+
             builder.Services.AddSession();
+
+            builder.Services.AddScoped<ICourseRepository, CourseRepository>();
+            builder.Services.AddScoped<IDepartmentRepository, DepartmentRepository>();
+            builder.Services.AddScoped<ITraineeRepository, TraineeRepository>();
+            builder.Services.AddScoped<IInstructorRepository, InstructorRepository>();
 
             var app = builder.Build();
 

@@ -1,4 +1,4 @@
-﻿using Day2_Institute;
+﻿using Institute;
 
 namespace Day2.VewModel
 {
@@ -8,7 +8,7 @@ namespace Day2.VewModel
         public string? Image { get; set; }
         public decimal Salary { get; set; }
         public string? Address { get; set; }
-        public List<Department> Departments { get; set; }
+        public List<Department> Department { get; set; }
         public List<Course> courses { get; set; }
     }
 }

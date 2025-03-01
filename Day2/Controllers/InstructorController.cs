@@ -1,53 +1,60 @@
 ﻿using Day2.Models;
 using Day2.VewModel;
-using Day2_Institute;
+using Institute;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-
+using Repository;
 namespace Day2.Controllers
 {
     public class InstructorController : Controller
     {
         private readonly IWebHostEnvironment _env;
 
-        public InstructorController(IWebHostEnvironment env)
+        private readonly IInstructorRepository _instructorRepository;
+        private readonly IDepartmentRepository _departmentRepository;
+        private readonly ICourseRepository _courseRepository;
+
+        public InstructorController(IWebHostEnvironment env,
+                                     IInstructorRepository instRepo,
+                                     IDepartmentRepository departmentRepo,
+                                     ICourseRepository courseRepository)
         {
             _env = env;
+            _instructorRepository = instRepo;
+            _departmentRepository = departmentRepo;
+            _courseRepository = courseRepository;
         }
-
-        InstituteContext context = new();
         public IActionResult Index()
         {
-            var Instructors = context.Instructor.Include(e=>e.Course)
-                        .Include(e=>e.Department).ToList();
+            var Instructor = _instructorRepository.GetAll();
 
-            return View("Index", Instructors);
+            return View("Index", Instructor);
         }
         public IActionResult IndexDetails(int id)
         {
-            var Instructors = context.Instructor.Include(e=>e.Course)
-                        .Include(e=>e.Department).FirstOrDefault(e=>e.ID==id);
+            var Instructor = _instructorRepository.GetByID(id);
 
-            if (Instructors == null) return NotFound("Instructor not found.");
+            if (Instructor == null) return NotFound("Instructor not found.");
 
-            return View("IndexDetails", Instructors);
+            return View("IndexDetails", Instructor);
         }
         public IActionResult New()
         {
 
             var InsMV = new InstructorVM();
-            InsMV.Departments= context.Department.ToList();
-            InsMV.courses= context.Course.ToList();
+            InsMV.Department = (List<Department>)_departmentRepository.GetAll();
+            InsMV.courses = (List<Course>)_courseRepository.GetAll();
 
             return View("NewInst", InsMV);
         }
+
         [HttpPost]
         public async Task<IActionResult> NewInst(Instructor ins, IFormFile Image)
         {
-            
+
             if (ins.Name != null)
             {
-                if (Image != null ) 
+                if (Image != null)
                 {
                     var uploadsFolder = Path.Combine(_env.WebRootPath, "Images");
 
@@ -58,15 +65,15 @@ namespace Day2.Controllers
                     }
                 }
                 ins.Image = Image?.FileName;
-                context.Add(ins);
-                context.SaveChanges();
+                _instructorRepository.Add(ins);
+                _instructorRepository.Save();
                 return RedirectToAction("Index");
             }
 
             var mapper = MapperConfig.InitializeAutomapper();
             var INSVM = mapper.Map<InstructorVM>(ins);
-            INSVM.Departments = context.Department.ToList();
-            INSVM.courses= context.Course.ToList();
+            INSVM.Department = (List<Department>)_departmentRepository.GetAll();
+            INSVM.courses = (List<Course>)_courseRepository.GetAll();
 
             return View("NewInst", INSVM);
         }
