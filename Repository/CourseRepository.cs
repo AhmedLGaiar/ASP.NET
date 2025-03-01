@@ -15,12 +15,17 @@ namespace Repository
         public void Update(Course entity) => _context.Course.Update(entity);
         public Course GetByID(int id) => _context.Course.Include(e => e.Department).FirstOrDefault(e => e.ID == id);
         public IEnumerable<Course> GetAll() => _context.Course.Include(e => e.Department).ToList();
-        public IEnumerable<crsResult> AllTrainee() => _context.CrsResults.Include(e => e.Trainee).Include(e => e.Course).ToList();
+        public IEnumerable<crsResult> AllTrainee() => _context.CrsResult.Include(e => e.Trainee).Include(e => e.Course).ToList();
         public void Delete(int id)
         {
             var entity = _context.Course.Find(id);
             if (entity != null)
                 _context.Course.Remove(entity);
+        }
+
+        public IEnumerable<crsResult> GetAllTraineeWithCourses()
+        {
+          return _context.CrsResult.Include(e => e.Trainee).Include(e => e.Course).ToList();
         }
     }
 }

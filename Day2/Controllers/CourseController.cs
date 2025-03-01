@@ -10,14 +10,11 @@ namespace Day2.Controllers
     public class CourseController : Controller
     {
         private readonly ICourseRepository _courseRepository;
-        private readonly ITraineeRepository _traineeRepository;
         private readonly IDepartmentRepository _departmentRepository;
         public CourseController(IDepartmentRepository departmentRepo,
-                             ITraineeRepository traineeRepo,
                              ICourseRepository courseRepo)
         {
             _courseRepository = courseRepo;
-            _traineeRepository = traineeRepo;
             _departmentRepository = departmentRepo;
         }
 
@@ -53,7 +50,7 @@ namespace Day2.Controllers
 
         public IActionResult AllTrainee()
         {
-            var Trainee = _traineeRepository.GetAll();
+            var Trainee = _courseRepository.GetAllTraineeWithCourses().ToList();
 
             var mapper = MapperConfig.InitializeAutomapper();
 

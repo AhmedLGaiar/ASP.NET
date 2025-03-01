@@ -16,6 +16,6 @@ namespace Institute
         [ForeignKey("Department")]
         public int DepartmentID { get; set; }
         public Department Department { get; set; }
-        public ICollection<crsResult> crsResults { get; set; } = new HashSet<crsResult>();
+        public ICollection<crsResult> CrsResult { get; set; } = new HashSet<crsResult>();
     }
 }

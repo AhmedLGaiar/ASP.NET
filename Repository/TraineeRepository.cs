@@ -28,7 +28,7 @@ namespace Repository
 
         public crsResult GetTraineeByIDandCourseID(int Traineeid, int Courseid)
         {
-            return _context.CrsResults.Include(e => e.Trainee)
+            return _context.CrsResult.Include(e => e.Trainee)
                              .Include(e => e.Course).FirstOrDefault(e => e.TraineeID == Traineeid && e.CourseID == Courseid);
         }
     }

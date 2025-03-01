@@ -209,13 +209,13 @@ namespace Institute.Migrations
             modelBuilder.Entity("Institute.crsResult", b =>
                 {
                     b.HasOne("Institute.Course", "Course")
-                        .WithMany("crsResults")
+                        .WithMany("CrsResult")
                         .HasForeignKey("CourseID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Institute.Trainee", "Trainee")
-                        .WithMany("crsResults")
+                        .WithMany("CrsResult")
                         .HasForeignKey("TraineeID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -229,7 +229,7 @@ namespace Institute.Migrations
                 {
                     b.Navigation("Instructor");
 
-                    b.Navigation("crsResults");
+                    b.Navigation("CrsResult");
                 });
 
             modelBuilder.Entity("Institute.Department", b =>
@@ -243,7 +243,7 @@ namespace Institute.Migrations
 
             modelBuilder.Entity("Institute.Trainee", b =>
                 {
-                    b.Navigation("crsResults");
+                    b.Navigation("CrsResult");
                 });
 #pragma warning restore 612, 618
         }
