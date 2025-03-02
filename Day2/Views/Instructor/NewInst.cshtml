@@ -1,43 +1,85 @@
 ﻿@model InstructorVM
 @{
     ViewData["Title"] = "NewInst";
+    SelectList DeptList = new SelectList(Model.Department, "ID", "Name");
+    // SelectList CrsList = new SelectList(Model.courses, "ID", "Name");
 }
 <body>
+
     <h1>New Instructor</h1>
-    <form action="/Instructor/NewInst" method="post" enctype="multipart/form-data">
-        <label>Name</label>
-        <input type="text" name="Name"
-               value="@Model.Name" class="form form-control" />
 
-        <label>Image</label>
-        <input type="file" name="Image" accept="image/*"
-              value="@Model.Image" class="form form-control" />
+    <form asp-action="NewInst" asp-controller="Instructor" enctype="multipart/form-data">
 
-        <label>Salary</label>
-        <input type="number" name="Salary"
-              value="@Model.Salary"  class="form form-control" />
+        <div>
+            <label asp-for="Name"></label>
+            <input asp-for="Name" class="form form-control" type="text" value="@(Model.Name ?? "")" />
+            <span asp-validation-for="Name" class="text-danger"></span>
+        </div>
 
-        <label>Address</label>
-        <input type="text" name="Address"
-              value="@Model.Address" class="form form-control" />
+        <div>
+            <label asp-for="Image"></label>
+            <input asp-for="Image" type="file" accept="image/*" class="form form-control"/>
+            <span asp-validation-for="Image" class="text-danger"></span>
+        </div>
 
-        <label>Course</label>
-        <select name="CourseID" class="form form-control">
-            @foreach (Course item in Model.courses)
-            {
-                <option value="@item.ID">@item.Name</option>
-            }
-        </select>
+        <div>
+            <label asp-for="Salary"></label>
+            <input asp-for="Salary" class="form form-control" type="number"/>
+            <span asp-validation-for="Salary" class="text-danger"></span>
+        </div>
 
-        <label>Department</label>
-        <select name="DepartmentID" class="form form-control">
-            @foreach (Department item in Model.Department)
-            {
-                <option value="@item.ID">@item.Name</option>
-            }
-        </select>
 
-        <input type="submit" value="Save" class="btn btn-secondary" />
+        <div>
+            <label asp-for="Address"></label>
+            <input asp-for="Address" type="text" class="form form-control" value="@(Model.Address ?? "")" />
+            <span asp-validation-for="Address" class="text-danger"></span>
+        </div>
+
+        <div>
+            <label asp-for="DepartmentID"></label>
+            <select asp-for="DepartmentID" asp-items="DeptList" class="form form-control" onchange="GetCourses()">
+                <option value="0">--Select Department --</option>
+            </select>
+            <span asp-validation-for="DepartmentID" class="text-danger"></span>
+        </div> 
+        
+        <div>
+            <label asp-for="CourseID"></label>
+            <select asp-for="CourseID" class="form form-control">
+                <option value="0">--Select Course--</option>
+            </select>
+            <span asp-validation-for="CourseID" class="text-danger"></span>
+        </div>
+
+        <div>
+            <input type="submit" value="Save" class="btn btn-secondary" />
+        </div>
+
     </form>
     <a href="/Instructor/Index">Go To List</a>
 </body>
+
+<script src="/lib/jquery/dist/jquery.min.js"></script>
+<script src="/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+<script src="/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+<script>
+	function GetCourses() {
+		var deptId = $("#DepartmentID").val();
+		console.log(deptId);
+
+        $("#CourseID").empty();
+        $("#CourseID").append('<option value="0">--Select Course--</option>');
+
+        $.ajax({
+            url: "/Instructor/CourseByDeptID?deptid=" + deptId,
+            success: function (result) {
+                for (let Crs of result) {
+                $("#CourseID").append(`<option value="${Crs.id}">${Crs.name}</option>`);
+                }
+            }
+        });
+    }
+</script>
+

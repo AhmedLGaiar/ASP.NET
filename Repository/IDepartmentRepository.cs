@@ -9,6 +9,6 @@ namespace Repository
 {
     public interface IDepartmentRepository : IRepository<Department>
     {
-
+        public IEnumerable<Course> GetCoursesInDepartment(int departmentID);
     }
 }

@@ -8,6 +8,8 @@ namespace Day2.Controllers
 {
     public class InstructorController : Controller
     {
+        #region Fields&ctor 
+
         private readonly IWebHostEnvironment _env;
 
         private readonly IInstructorRepository _instructorRepository;
@@ -24,12 +26,16 @@ namespace Day2.Controllers
             _departmentRepository = departmentRepo;
             _courseRepository = courseRepository;
         }
+
+        #endregion
+
         public IActionResult Index()
         {
             var Instructor = _instructorRepository.GetAll();
 
             return View("Index", Instructor);
         }
+
         public IActionResult IndexDetails(int id)
         {
             var Instructor = _instructorRepository.GetByID(id);
@@ -38,6 +44,7 @@ namespace Day2.Controllers
 
             return View("IndexDetails", Instructor);
         }
+
         public IActionResult New()
         {
 
@@ -46,6 +53,14 @@ namespace Day2.Controllers
             InsMV.courses = (List<Course>)_courseRepository.GetAll();
 
             return View("NewInst", InsMV);
+        }
+
+        public IActionResult CourseByDeptID(int deptid)
+        {
+
+            var crs = _departmentRepository.GetCoursesInDepartment(deptid);
+
+            return Json(crs);
         }
 
         [HttpPost]

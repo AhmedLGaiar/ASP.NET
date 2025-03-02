@@ -24,5 +24,8 @@ namespace Repository
             if (entity != null)
                 _context.Department.Remove(entity);
         }
+
+        public IEnumerable<Course> GetCoursesInDepartment(int departmentID)
+                       => _context.Course.Where(c => c.DepartmentID == departmentID).ToList(); 
     }
 }
