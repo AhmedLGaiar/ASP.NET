@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Day2.Models;
 using Repository;
 
 namespace Day2.Controllers

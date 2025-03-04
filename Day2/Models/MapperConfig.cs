@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using Day2.Controllers;
 using Day2.VewModel;
 using Institute;
 

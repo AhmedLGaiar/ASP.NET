@@ -1,9 +1,8 @@
 ﻿using Day2.Models;
 using Day2.VewModel;
-using Institute;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using Repository;
+
 namespace Day2.Controllers
 {
     public class TraineeController : Controller
