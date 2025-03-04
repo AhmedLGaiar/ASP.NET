@@ -50,7 +50,6 @@ namespace Day2.Controllers
 
             var InsMV = new InstructorVM();
             InsMV.Department = (List<Department>)_departmentRepository.GetAll();
-            InsMV.courses = (List<Course>)_courseRepository.GetAll();
 
             return View("NewInst", InsMV);
         }
@@ -88,7 +87,6 @@ namespace Day2.Controllers
             var mapper = MapperConfig.InitializeAutomapper();
             var INSVM = mapper.Map<InstructorVM>(ins);
             INSVM.Department = (List<Department>)_departmentRepository.GetAll();
-            INSVM.courses = (List<Course>)_courseRepository.GetAll();
 
             return View("NewInst", INSVM);
         }
